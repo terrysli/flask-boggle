@@ -8,7 +8,15 @@ app.config["SECRET_KEY"] = "this-is-secret"
 
 # The boggle games created, keyed by game id
 games = {}
-
+test_game = BoggleGame()
+test_game.board = [
+    ['X','X','X','X','X'],
+    ['X','X','C','X','X'],
+    ['X','X','A','X','X'],
+    ['X','X','T','X','X'],
+    ['X','X','X','X','X']
+    ]
+games['testid'] = test_game
 
 @app.get("/")
 def homepage():

@@ -56,20 +56,22 @@ class BoggleAppTestCase(TestCase):
 
         with self.client as client:
 
-            g = BoggleGame()
-            g.board = [
-                ['X','X','X','X','X'],
-                ['X','X','C','X','X'],
-                ['X','X','A','X','X'],
-                ['X','X','T','X','X'],
-                ['X','X','X','X','X']
-                ]
-            games['id'] = g
-            data = {'gameId': 'id', 'word': 'XKJDF'}
-
+            data = {'gameId': 'test_id', 'word': 'XKJDF'}
             response = client.post("/api/score-word",
                                    jsonify(data))
             json_data = response.get_json()
             self.assertEqual(json_data, '{"result": "not-word"}')
+
+            data = {'gameId': 'test_id', 'word': 'DOG'}
+            response = client.post("/api/score-word",
+                                   jsonify(data))
+            json_data = response.get_json()
+            self.assertEqual(json_data, '{"result": "not-on-board"}')
+
+            data = {'gameId': 'test_id', 'word': 'CAT'}
+            response = client.post("/api/score-word",
+                                   jsonify(data))
+            json_data = response.get_json()
+            self.assertEqual(json_data, '{"result": "ok"}')
 
 
